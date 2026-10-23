@@ -1,0 +1,42 @@
+name: Licznik zdjęć
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: licznik
+  cancel-in-progress: false
+
+jobs:
+  policz:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalacja requests
+        run: pip install requests
+
+      - name: Liczenie zdjęć
+        run: python policz.py --out licznik.json
+
+      - name: Zapis licznik.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add licznik.json
+          if git diff --cached --quiet; then
+            echo "Bez zmian."
+          else
+            git commit -m "Licznik: aktualizacja $(date -u +%Y-%m-%d)"
+            git push
+          fi
