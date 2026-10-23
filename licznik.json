@@ -1,0 +1,117 @@
+{
+ "total": 149433,
+ "photos": 149429,
+ "videos": 4,
+ "albums": 1740,
+ "listed_items": 149418,
+ "sites_unavailable": [
+  "https://sites.google.com/site/bagnscywszyscyrazem"
+ ],
+ "pages": 1194,
+ "dead_links": 0,
+ "per_year": {
+  "2005": {
+   "albums": 43,
+   "items": 2365,
+   "videos": 0,
+   "photos": 2365
+  },
+  "2006": {
+   "albums": 56,
+   "items": 2074,
+   "videos": 0,
+   "photos": 2074
+  },
+  "2007": {
+   "albums": 81,
+   "items": 3467,
+   "videos": 3,
+   "photos": 3464
+  },
+  "2008": {
+   "albums": 124,
+   "items": 8067,
+   "videos": 0,
+   "photos": 8067
+  },
+  "2009": {
+   "albums": 77,
+   "items": 10151,
+   "videos": 0,
+   "photos": 10151
+  },
+  "2010": {
+   "albums": 143,
+   "items": 16309,
+   "videos": 0,
+   "photos": 16309
+  },
+  "2011": {
+   "albums": 92,
+   "items": 9983,
+   "videos": 1,
+   "photos": 9982
+  },
+  "2012": {
+   "albums": 102,
+   "items": 7452,
+   "videos": 0,
+   "photos": 7452
+  },
+  "2013": {
+   "albums": 83,
+   "items": 8242,
+   "videos": 0,
+   "photos": 8242
+  },
+  "2014": {
+   "albums": 107,
+   "items": 8128,
+   "videos": 0,
+   "photos": 8128
+  },
+  "2015": {
+   "albums": 76,
+   "items": 6727,
+   "videos": 0,
+   "photos": 6727
+  },
+  "2016": {
+   "albums": 193,
+   "items": 14532,
+   "videos": 0,
+   "photos": 14532
+  },
+  "2017": {
+   "albums": 97,
+   "items": 9166,
+   "videos": 0,
+   "photos": 9166
+  },
+  "2018": {
+   "albums": 129,
+   "items": 17620,
+   "videos": 0,
+   "photos": 17620
+  },
+  "2019": {
+   "albums": 95,
+   "items": 11368,
+   "videos": 0,
+   "photos": 11368
+  },
+  "2020": {
+   "albums": 159,
+   "items": 8117,
+   "videos": 0,
+   "photos": 8117
+  },
+  "2021": {
+   "albums": 83,
+   "items": 5665,
+   "videos": 0,
+   "photos": 5665
+  }
+ },
+ "updated": "2026-10-23T02:11:59+00:00"
+}

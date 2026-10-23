@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Licznik zdjęć – Wszystko co nasze</title>
+<!--
+  Licznik zdjęć w stylu art deco.
+  Parametry w adresie (opcjonalne):
+    ?tlo=granat     – granatowe tło (domyślnie przezroczyste, do Google Sites)
+    ?lata=0         – ukryj przewijane podsumowanie lat
+-->
+<style>
+@font-face{font-family:"Limelight";src:url(fonts/Limelight-Regular.ttf) format("truetype");font-display:swap}
+@font-face{font-family:"Poiret One";src:url(fonts/PoiretOne-Regular.ttf) format("truetype");font-display:swap}
+:root{--gold:#d4af37;--lgold:#f1d98a;--dgold:#8c6e2d;--navy:#0e1428}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center;font-family:"Poiret One",Georgia,serif;color:var(--gold)}
+body.granat{background:var(--navy)}
+.box{position:relative;width:min(100%,640px);max-height:148px;padding:8px 26px 6px;text-align:center}
+body.granat .box,body.przez .box{border:1px solid rgba(212,175,55,.55);box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px rgba(212,175,55,.28)}
+body.przez .box{background:rgba(14,20,40,.82);border-radius:2px}
+/* narożniki art deco */
+.box:before,.box:after{content:"";position:absolute;top:6px;width:18px;height:18px;border:2px solid var(--gold);opacity:.8}
+.box:before{left:6px;border-right:0;border-bottom:0}
+.box:after{right:6px;border-left:0;border-bottom:0}
+.rog{position:absolute;bottom:6px;width:18px;height:18px;border:2px solid var(--gold);opacity:.8}
+.rog.l{left:6px;border-right:0;border-top:0}.rog.p{right:6px;border-left:0;border-top:0}
+.napis{font-size:clamp(11px,2.6vw,15px);letter-spacing:.32em;text-transform:uppercase;color:var(--lgold);white-space:nowrap}
+.napis:before,.napis:after{content:"";display:inline-block;width:clamp(14px,6vw,46px);height:1px;background:linear-gradient(90deg,transparent,var(--gold));vertical-align:middle;margin:0 .6em}
+.napis:after{background:linear-gradient(90deg,var(--gold),transparent)}
+.liczba{font-family:"Limelight",Georgia,serif;font-size:clamp(30px,9vw,52px);line-height:1.08;
+  background:linear-gradient(180deg,#fff3c4 0%,var(--lgold) 30%,var(--gold) 55%,var(--dgold) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,.6));font-variant-numeric:tabular-nums;white-space:nowrap}
+.liczba small{font-family:"Poiret One",serif;font-size:.42em;letter-spacing:.08em;margin-left:.25em;color:var(--lgold);-webkit-text-fill-color:var(--lgold)}
+.pod{font-size:clamp(11px,2.4vw,14px);letter-spacing:.08em;color:var(--lgold);opacity:.92;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pod b{font-weight:normal;color:#fff3c4}
+.rok{height:1.3em;line-height:1.3em;font-size:clamp(11px,2.3vw,13px);letter-spacing:.1em;color:var(--gold);opacity:0;transition:opacity .6s}
+.rok.on{opacity:.9}
+.romb{display:inline-block;width:5px;height:5px;background:var(--gold);transform:rotate(45deg);margin:0 .7em;vertical-align:middle}
+body:not(.granat):not(.przez) .napis,body:not(.granat):not(.przez) .pod,body:not(.granat):not(.przez) .rok{text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,.9),1px 1px 0 #000}
+body:not(.granat):not(.przez) .liczba{filter:drop-shadow(0 0 2px #000) drop-shadow(1px 1px 1px #000)}
+@media (max-width:480px){.data{display:none}}
+.blad{font-size:13px;opacity:.8}
+</style>
+</head>
+<body>
+<div class="box">
+  <span class="rog l"></span><span class="rog p"></span>
+  <div class="napis">W naszych albumach</div>
+  <div class="liczba"><span id="n">0</span><small id="sl">zdjęć</small></div>
+  <div class="pod" id="pod">&nbsp;</div>
+  <div class="rok" id="rok"></div>
+</div>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var tlo=q.get("tlo");
+  if(tlo==="granat") document.body.className="granat";
+  else if(tlo==="pol") document.body.className="przez";   // półprzezroczysta granatowa karta
+  var pokazLata=q.get("lata")!=="0";
+  function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,"\u00a0");}
+  function odm(n,a,b,c){ // 1 zdjęcie, 2 zdjęcia, 5 zdjęć
+    if(n===1) return a; var d=n%10,s=n%100;
+    return (d>=2&&d<=4&&(s<12||s>14))?b:c;}
+  function licz(cel){
+    var el=document.getElementById("n"),t0=null,dur=2200;
+    if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){el.textContent=fmt(cel);return;}
+    function krok(t){ if(!t0)t0=t; var p=Math.min(1,(t-t0)/dur); var e=1-Math.pow(1-p,4);
+      el.textContent=fmt(Math.round(cel*e)); if(p<1) requestAnimationFrame(krok);}
+    requestAnimationFrame(krok);}
+  function pokaz(d){
+    var zdj=d.photos!=null?d.photos:d.total;
+    licz(zdj);
+    document.getElementById("sl").textContent=odm(zdj,"zdjęcie","zdjęcia","zdjęć");
+    var lata=Object.keys(d.per_year||{}).sort();
+    var txt="w <b>"+fmt(d.albums)+"</b> "+odm(d.albums,"albumie","albumach","albumach");
+    if(lata.length) txt+='<span class="romb"></span>'+lata[0]+"–"+lata[lata.length-1];
+    if(d.videos) txt+='<span class="romb"></span>i <b>'+fmt(d.videos)+"</b> "+odm(d.videos,"film","filmy","filmów");
+    if(d.updated){var u=new Date(d.updated);
+      txt+='<span class="data"><span class="romb"></span>stan na '+u.toLocaleDateString("pl-PL",{day:"numeric",month:"long",year:"numeric"})+'</span>';}
+    document.getElementById("pod").innerHTML=txt;
+    if(pokazLata&&lata.length){
+      var i=0,r=document.getElementById("rok");
+      function nast(){ r.classList.remove("on");
+        setTimeout(function(){var y=lata[i%lata.length],v=d.per_year[y],z=v.photos!=null?v.photos:v.items;
+          r.innerHTML="rok "+y+'<span class="romb"></span>'+fmt(z)+" "+odm(z,"zdjęcie","zdjęcia","zdjęć")+'<span class="romb"></span>'+fmt(v.albums)+" "+odm(v.albums,"album","albumy","albumów");
+          r.classList.add("on"); i++;},650);}
+      setTimeout(function(){nast();setInterval(nast,3500);},2400);
+    }
+  }
+  fetch("licznik.json?t="+Date.now(),{cache:"no-store"})
+    .then(function(r){if(!r.ok)throw 0;return r.json();})
+    .then(pokaz)
+    .catch(function(){document.getElementById("pod").innerHTML='<span class="blad">Nie udało się wczytać licznika – spróbuj odświeżyć stronę.</span>';});
+})();
+</script>
+</body>
+</html>

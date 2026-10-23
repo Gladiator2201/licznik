@@ -1,0 +1,29 @@
+LICZNIK ZDJĘĆ – repozytorium "licznik" na GitHubie
+==================================================
+
+Co tu jest:
+  licznik.html   – sam licznik (do wstawienia na stronę Google Sites)
+  licznik.json   – aktualne liczby (odświeżane automatycznie co noc)
+  policz.py      – program, który liczy zdjęcia we wszystkich albumach
+  index.html     – przekierowanie na licznik
+  fonts/         – czcionki art deco (Limelight, Poiret One)
+  .github/workflows/licznik.yml – codzienne automatyczne liczenie
+
+Jak wgrać:
+ 1. github.com → New repository → nazwa: licznik → Public → Create repository.
+ 2. "uploading an existing file" → przeciągnij: licznik.html, licznik.json,
+    policz.py, index.html i folder fonts → Commit changes.
+ 3. Plik automatu (folder .github bywa pomijany przy przeciąganiu, bo jest "ukryty"):
+    Add file → Create new file → w polu nazwy wpisz dokładnie:
+        .github/workflows/licznik.yml
+    wklej zawartość pliku licznik.yml → Commit changes.
+ 4. Settings → Pages → Deploy from a branch → main, / (root) → Save.
+ 5. Actions → "Licznik zdjęć" → Run workflow (pierwsze ręczne uruchomienie, ok. 5 min).
+
+Adresy:
+  https://gladiator2201.github.io/licznik/licznik.html              (przezroczysty – do Google Sites)
+  https://gladiator2201.github.io/licznik/licznik.html?tlo=granat   (granatowe tło)
+  https://gladiator2201.github.io/licznik/licznik.html?tlo=pol      (półprzezroczysta granatowa karta)
+  dopisek &lata=0 lub ?lata=0 ukrywa przewijane podsumowanie lat
+
+Google Sites: Wstaw → Umieść → Według adresu URL → wklej adres → ramka ok. 150 px wysokości.
